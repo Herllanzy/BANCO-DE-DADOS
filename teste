@@ -1,0 +1,52 @@
+create table Bolsa2020 ( 
+mes_competencia varchar(200),
+mes_referencia varchar(200),
+uf varchar(200),
+codigo_municipal varchar(200),
+nome_municipio varchar(200), 
+cpf varchar(200) ,
+nis varchar(200),
+nome_favorecido varchar(200),
+valor_parcela varchar(200)
+);
+
+COPY Bolsa2020 FROM '/tmp/Copia.csv'  using delimiters ';' header;
+
+
+explain analyse select * from Bolsa2020 where valor_parcela = '170'
+
+create index Bolsa2020_idx on Bolsa2020(valor_parcela)
+
+
+explain analyse select * from Bolsa2020 where valor_parcela = '170'
+
+-------------------------------------------------------------------------------
+
+create table Bolsa2018 ( 
+mes_competencia varchar(200),
+mes_referencia varchar(200),
+uf varchar(200),
+codigo_municipal varchar(200),
+nome_municipio varchar(200), 
+cpf varchar(200),
+nis varchar(200),
+nome_favorecido varchar(200),
+valor_parcela varchar(200)
+);
+
+drop table Bolsa2020;
+
+COPY Bolsa2018 FROM '/tmp/teste1.csv'  using delimiters ';' header;
+
+explain analyse select * from Bolsa2018 where valor_parcela = '170'
+
+create index Bolsa2018_idx on Bolsa2018(valor_parcela)
+
+explain analyse select * from Bolsa2018 where valor_parcela = '170'
+
+select count(*) from Bolsa2018 inner join Bolsa2020 on Bolsa2020.cpf = Bolsa2020.cpf;
+
+select * from Bolsa2020 inner join Bolsa2018 on Bolsa2020.cpf = Bolsa2018.cpf; 
+
+select distinct Bolsa2020.cpf, Bolsa2020.nome_favorecido as nome_2020, Bolsa2018.nome_favorecido as nome_2018 from Bolsa2020 inner join Bolsa2018 on Bolsa2020.cpf = Bolsa2018.cpf;
+
